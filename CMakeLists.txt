@@ -3,14 +3,14 @@ project(RayTracer)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(RayTracer main.cpp
-        vec3.h
-        color.h
-        ray.h
-        hittable.h
-        sphere.h
-        hittable_list.h
-        rtweekend.h
-        interval.h
-        camera.h)
+add_executable(RayTracer src/main.cpp
+        src/vec3.h
+        src/color.h
+        src/ray.h
+        src/hittable.h
+        src/sphere.h
+        src/hittable_list.h
+        src/rtweekend.h
+        src/interval.h
+        src/camera.h)
 
