@@ -3,6 +3,7 @@
 
 #include "ray.h"
 #include "interval.h"
+#include "vec3.h"
 
 class hit_record {
 public:

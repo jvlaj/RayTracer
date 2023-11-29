@@ -11,6 +11,7 @@ public:
     double aspect_ratio = 1.0;
     int image_width = 100;
     int samples_per_pixel = 10;
+    int max_depth = 10;
 
     void render(hittable_list&world) {
         // Initialise before render.
@@ -24,7 +25,7 @@ public:
                 color pixel_color(0,0,0);
                 for (int sample = 0; sample < samples_per_pixel; sample++) {
                     ray r = get_ray(i,j);
-                    pixel_color += ray_color(world, r);
+                    pixel_color += ray_color(world, r, max_depth);
                 }
                 write_color(std::cout, pixel_color, samples_per_pixel);
             }
@@ -67,11 +68,15 @@ private:
         pixel00_loc = viewport_upper_left + (0.5 * (pixel_delta_u + pixel_delta_v));
     }
 
-    color ray_color(const hittable&world, const ray&r) const {
+    color ray_color(const hittable&world, const ray&r, int depth) const {
         hit_record rec;
 
-        if (world.hit(r, interval(0, infinity), rec)) {
-            return 0.5 * (rec.normal + color(1, 1, 1));
+        if (depth <= 0)
+            return color(0,0,0);
+
+        if (world.hit(r, interval(0.001, infinity), rec)) {
+            const vec3 direction = random_on_hemisphere(rec.normal);
+            return 0.5 * ray_color(world, ray(rec.p,  direction), depth-1);
         }
 
         vec3 unit_direction = unit_vector(r.direction());
