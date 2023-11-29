@@ -75,7 +75,8 @@ private:
             return color(0,0,0);
 
         if (world.hit(r, interval(0.001, infinity), rec)) {
-            const vec3 direction = random_on_hemisphere(rec.normal);
+            const vec3 direction = rec.normal + random_unit_vector();
+            // const vec3 direction = random_double(); // equal reflection diffuse
             return 0.5 * ray_color(world, ray(rec.p,  direction), depth-1);
         }
 
