@@ -75,9 +75,11 @@ private:
             return color(0,0,0);
 
         if (world.hit(r, interval(0.001, infinity), rec)) {
-            const vec3 direction = rec.normal + random_unit_vector();
-            // const vec3 direction = random_double(); // equal reflection diffuse
-            return 0.5 * ray_color(world, ray(rec.p,  direction), depth-1);
+            ray scattered;
+            color attenuation;
+            if (rec.mat->scatter(r, rec, attenuation, scattered))
+                return attenuation * ray_color(world, scattered, depth-1);
+            return color(0,0,0);
         }
 
         vec3 unit_direction = unit_vector(r.direction());

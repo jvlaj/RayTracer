@@ -4,10 +4,11 @@
 #include "hittable.h"
 #include "vec3.h"
 #include <cmath>
+#include "material.h"
 
 class sphere : public hittable {
 public:
-    sphere(point3 _centre, double _radius): centre(_centre), radius(_radius) {
+    sphere(point3 _centre, double _radius, shared_ptr<material> _material): centre(_centre), radius(_radius), mat(_material) {
     };
 
     bool hit(const ray&r, interval ray_t,
@@ -35,6 +36,7 @@ public:
         rec.p = r.at(rec.t);
         vec3 outward_normal = (rec.p - centre) / radius;
         rec.set_face_normal(r, outward_normal);
+        rec.mat = mat;
 
         return true;
     }
@@ -42,6 +44,7 @@ public:
 private:
     point3 centre;
     double radius;
+    shared_ptr<material>  mat;
 };
 
 
