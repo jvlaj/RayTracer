@@ -1,8 +1,6 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
 
-#include <pstl/algorithm_fwd.h>
-
 #include "camera.h"
 #include "rtweekend.h"
 
